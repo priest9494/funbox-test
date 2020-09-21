@@ -5,7 +5,7 @@
 			:class="{ 
 				'disabled':!enabled, 
 				'default-hover': !selected && hover,
-				'selected': selected,
+				'selected': selected && !hover,
 				'selected-hover': selected && hover,
 				}"
 			@mouseover="setHover(true)"
@@ -18,7 +18,7 @@
 					<div
 						class="top-line"
 						:class="{ 'disabled': !enabled }"
-						v-if="!(selected && hover)"
+						v-if="!(selected && hover) || justChoosen"
 					>
 						Сказочное заморское яство
 					</div>
@@ -26,7 +26,7 @@
 					<div
 						class="top-line selected-hover"
 						:class="{ 'disabled': !enabled }"
-						v-if="selected && hover"
+						v-if="selected && hover && !justChoosen"
 					>
 						Котэ не одобряет?
 					</div>
@@ -91,6 +91,7 @@ export default {
 			choosed: false,
 			hover: false,
 			selected: false,
+			justChoosen: false,
 		}
 	},
 	computed: {
@@ -109,12 +110,19 @@ export default {
 		},
 		select() {
 			if (!this.enabled) return;
-			this.selected = !	this.selected;
-			this.hover = false;
+
+			this.selected = !this.selected;
+			if(this.selected == true) 
+				this.justChoosen = true;
 		},
 		setHover(state) {
+			if (this.hover == state) return;
 			if (!this.enabled) return;
+
 			this.hover = state;
+			if (this.hover == false) {
+				this.justChoosen = false;
+			}	
 		}
 	}
 }

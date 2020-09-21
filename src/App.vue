@@ -7,6 +7,7 @@
 
       <div class="card-wrapper">
         <Food-card
+          class="food-card"
           v-bind:tasteLine="'фуа-гра'"
           v-bind:portionsCount="'10'"
           v-bind:mouseCount="'1'"
@@ -80,7 +81,10 @@ export default {
           display: flex;
           flex-wrap: wrap;
           justify-content: space-around;
-          margin-top: 30px;
+
+          .food-card {
+            margin-top: 30px;
+          }
         }
       }
     }
